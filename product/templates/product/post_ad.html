@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block body %}
+	<!-- Submit Ad -->
+	<div class="submit-ad main-grid-border">
+		<div class="container">
+			<h2 class="head">Post an Ad</h2>
+			<div class="post-ad-form">
+			<form method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					{% for field in form %}
+						<p>
+							{{ field.label_tag }}<br>
+							{{ field }}
+							{% if field.help_text %}
+								<small style="color: grey">{{ field.help_text }}</small>
+							{% endif %}
+							{% for error in field.errors %}
+								<p style="color: red">{{ error }}</p>
+							{% endfor %}
+						</p>
+					{% endfor %}
+					<!--<br>
+					<br>
+					<br>
+					<h4 class="head">Choose three images of the product for the customers to view</h4>
+					{% for field in form2 %}
+						<p>
+							{{ field.label_tag }}<br>
+							{{ field }}
+							{% if field.help_text %}
+								<small style="color: grey">{{ field.help_text }}</small>
+							{% endif %}
+							{% for error in field.errors %}
+								<p style="color: red">{{ error }}</p>
+								
+							{% endfor %}
+						</p>
+					{% endfor %}-->
+					<div class="clearfix"></div>
+						
+					<input type="submit" value="Post">					
+					<div class="clearfix"></div>
+					</form>
+
+					
+			</div>
+		</div>	
+	</div>
+	<!-- // Submit Ad -->
+	<!--footer section start-->		
+		
+		{% endblock body %}
+
+
+		<!--@login_required
+def Post(request):
+ 
+    ImageFormSet = modelformset_factory(ProductImages,
+                                        form=AddImagesForm, extra=3)
+    #'extra' means the number of photos that you can upload   ^
+    user=request.user
+    if request.method == 'POST':
+    
+        postForm = PostForm(request.POST, request.FILES)
+        formset = ImageFormSet(request.POST, request.FILES,
+                               queryset=ProductImages.objects.none())
+    
+    
+        if postForm.is_valid() and formset.is_valid():
+            post_form = postForm.save(commit=False)
+            post_form.owner = user
+            post_form.save()
+    
+            for form in formset.cleaned_data:
+                #this helps to not crash if the user   
+                #do not upload all the photos
+                if form:
+                    image = form['image']
+                    photo = ProductImages(post=post_form, image=image)
+                    photo.save()
+            template='product/product_detail.html'                
+            return render(request, template)
+        else:
+            print(postForm.errors, formset.errors)
+    else:
+        postForm = PostForm()
+        formset = ImageFormSet(queryset= ProductImages.objects.none())
+
+    context={'postform':postForm, 'formset':formset }
+    template='product/post_ad.html'
+    return render(request, template, context)
+    -->
+
+
+	<!--@login_required
+def Post(request):
+    user=request.user
+    if request.method=="POST":
+        form1=PostForm(request.POST, request.FILES )
+        form2=AddImagesForm(request.POST, request.FILES)
+        if form1.is_valid():
+            data=form1.save(commit=False)
+            data.owner=user
+            data.save()
+            if form2.is_valid():
+                info=form2.save(commit=False)
+                info.product_id=data.id
+                info.save()
+
+                template='product/product_detail.html'
+                return render(request, template)
+
+           
+    else:
+        form1=PostForm()
+        form2=AddImagesForm()
+    context={'form1':form1, 'form2':form2}
+    template='product/post_ad.html'
+    return render(request, template, context)-->

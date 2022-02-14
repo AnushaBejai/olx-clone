@@ -1,0 +1,61 @@
+{% extends 'base2.html' %}
+{% load bootstrap4 %}
+{% block body %}
+
+	<!-- BREADCRUMB -->
+	<div id="breadcrumb">
+		<div class="container">
+			<ul class="breadcrumb">
+				<li><a href="/">Home</a></li>
+				<li class="active">User Sign Up </li>
+			</ul>
+		</div>
+	</div>
+	<!-- /BREADCRUMB -->
+
+	<!-- section -->
+	<div class="sign-up main-grid-border">
+		<div class="container">
+			<h2 class="head">Sign Up</h2>
+			<div class="sign-up-form">
+
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{message.tags}}" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <form method="post">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                <p>
+                                    {{ field.label_tag }}<br>
+                                    {{ field }}
+                                    {% if field.help_text %}
+                                        <small style="color: grey">{{ field.help_text }}</small>
+                                    {% endif %}
+                                    {% for error in field.errors %}
+                                        <p style="color: red">{{ error }}</p>
+                                    {% endfor %}
+                                </p>
+                            {% endfor %}
+                            <br>
+                            <button type="submit" class="user btn btn-success">Sign up</button>
+                        </form>
+
+
+
+                    </div>
+                </div>
+
+
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+
+{% endblock %}
